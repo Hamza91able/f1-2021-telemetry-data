@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import Dash from "./Components/Dash/Dash";
-import Speed from "./Components/Speed/Speed";
 
 function App() {
   const [socket, setSocket] = useState(null);
