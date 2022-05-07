@@ -1,9 +1,8 @@
 import React from "react";
-import moment from "moment";
 
 import { Alert, Container, Grid, Typography } from "@mui/material";
 import LinearWithValueLabel from "../Progress/Progress";
-import { fancyTimeFormat, formatTime } from "../../Helpers";
+import { formatTime } from "../../Helpers";
 
 const fontSize = 50;
 const marginTop = 34;
