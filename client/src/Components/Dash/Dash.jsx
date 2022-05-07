@@ -2,6 +2,7 @@ import React from "react";
 
 import { Alert, Container, Grid, Typography } from "@mui/material";
 import LinearWithValueLabel from "../Progress/Progress";
+import { fancyTimeFormat } from "../../Helpers";
 
 const fontSize = 50;
 const marginTop = 34;
@@ -45,7 +46,9 @@ export default function Dash({ tel_data, lapData, carData }) {
               <Typography
                 style={{ fontSize: 32, marginTop: -47, textAlign: "center" }}
               >
-                {(lapData?.m_currentLapTimeInMS / 1000).toFixed(3) || 0.0}
+                {lapData?.m_currentLapTimeInMS / 1000 > 60
+                  ? (lapData?.m_currentLapTimeInMS / 1000 / 60).toFixed(3)
+                  : (lapData?.m_currentLapTimeInMS / 1000).toFixed(3)}
               </Typography>
             </div>
           </Grid>
@@ -53,7 +56,7 @@ export default function Dash({ tel_data, lapData, carData }) {
             <Typography style={{ fontSize: fontSize }}>
               {tel_data?.m_speed || 0} KPH
               <br />
-              -:--.---
+              {fancyTimeFormat(lapData?.m_currentLapTimeInMS / 1000)}
             </Typography>
           </Grid>
         </Grid>
@@ -108,13 +111,31 @@ export default function Dash({ tel_data, lapData, carData }) {
         <Container maxWidth="md">
           <Grid container style={{ marginTop: 30 }}>
             <Grid item xs={12}>
-              <LinearWithValueLabel value={carData?.m_ersStoreEnergy} bar={carData?.m_ersDeployedThisLap} />
+              {/* TOTAL ERS */}
+              <LinearWithValueLabel
+                value={carData?.m_ersStoreEnergy}
+                bar={carData?.m_ersDeployedThisLap}
+              />
             </Grid>
             <Grid item xs={6}>
-              <LinearWithValueLabel />
+              {/* ERS USED THIS LAP */}
+              <LinearWithValueLabel
+                value={4000000 - carData?.m_ersDeployedThisLap}
+                bar={4000000 - carData?.m_ersDeployedThisLap}
+              />
             </Grid>
             <Grid item xs={6}>
-              <LinearWithValueLabel />
+              {/* ERS HARVESTED THIS LAP */}
+              <LinearWithValueLabel
+                value={
+                  carData?.m_ersHarvestedThisLapMGUH +
+                  carData?.m_ersHarvestedThisLapMGUK
+                }
+                bar={
+                  carData?.m_ersHarvestedThisLapMGUH +
+                  carData?.m_ersHarvestedThisLapMGUK
+                }
+              />
             </Grid>
           </Grid>
         </Container>
