@@ -1,8 +1,9 @@
 import React from "react";
+import moment from "moment";
 
 import { Alert, Container, Grid, Typography } from "@mui/material";
 import LinearWithValueLabel from "../Progress/Progress";
-import { fancyTimeFormat } from "../../Helpers";
+import { fancyTimeFormat, formatTime } from "../../Helpers";
 
 const fontSize = 50;
 const marginTop = 34;
@@ -46,9 +47,7 @@ export default function Dash({ tel_data, lapData, carData }) {
               <Typography
                 style={{ fontSize: 32, marginTop: -47, textAlign: "center" }}
               >
-                {lapData?.m_currentLapTimeInMS / 1000 > 60
-                  ? (lapData?.m_currentLapTimeInMS / 1000 / 60).toFixed(3)
-                  : (lapData?.m_currentLapTimeInMS / 1000).toFixed(3)}
+                -:--.---
               </Typography>
             </div>
           </Grid>
@@ -56,7 +55,9 @@ export default function Dash({ tel_data, lapData, carData }) {
             <Typography style={{ fontSize: fontSize }}>
               {tel_data?.m_speed || 0} KPH
               <br />
-              {fancyTimeFormat(lapData?.m_currentLapTimeInMS / 1000)}
+              {lapData?.m_currentLapTimeInMS / 1000 > 60
+                ? formatTime(lapData?.m_currentLapTimeInMS)
+                : (lapData?.m_currentLapTimeInMS / 1000).toFixed(3)}
             </Typography>
           </Grid>
         </Grid>

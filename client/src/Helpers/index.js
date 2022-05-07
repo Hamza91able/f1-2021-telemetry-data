@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const fancyTimeFormat = (duration) => {
   // Hours, minutes and seconds
   var hrs = ~~(duration / 3600);
@@ -12,6 +14,13 @@ export const fancyTimeFormat = (duration) => {
   }
 
   ret += "" + mins + ":" + (secs < 10 ? "0" : "");
-  ret += "" + secs
+  ret += "" + secs;
   return ret;
+};
+
+export const formatTime = (duration) => {
+  const formatted = (duration / 1000).toFixed(3);
+  const in_minutes = moment(duration).format("mm:ss");
+  const mili_split = formatted.split(".")[1];
+  return `${in_minutes}:${mili_split}`;
 };
